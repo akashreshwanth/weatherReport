@@ -171,7 +171,7 @@
 
   @keyframes slideExpand {
     from {
-      width: 60px;
+      width: 60px; 
     }
     to {
       width: 320px;
