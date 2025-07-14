@@ -255,6 +255,7 @@
   .heart-animate {
     @apply transition-all duration-300;
   }
+/* Triggering Git to detect a change */
 
   .heart-animate:hover {
     @apply text-red-500;
