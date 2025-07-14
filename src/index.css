@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Futuristic Weather Dashboard Design System */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;900&display=swap');
+
+@layer base {
+  :root {
+    /* Light mode - Clean grey and white */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 0 0% 20%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 92%;
+    --accent-foreground: 0 0% 15%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 88%;
+    --input: 0 0% 94%;
+    --ring: 180 100% 50%;
+    --radius: 0.75rem;
+
+    /* Enhanced futuristic colors */
+    --neon-cyan: 180 100% 50%;
+    --neon-blue: 220 100% 60%;
+    --neon-purple: 270 80% 70%;
+    --glass-bg: 0 0% 98%;
+    --glass-border: 0 0% 90%;
+    --shadow-glow: 180 100% 50%;
+  }
+
+  .dark {
+    /* Enhanced dark theme - Pure blacks and greys */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 0 0% 15%;
+    --input: 0 0% 10%;
+    --ring: 180 100% 50%;
+
+    /* Dark theme glass effects */
+    --glass-bg: 0 0% 3%;
+    --glass-border: 0 0% 15%;
+    --shadow-glow: 180 100% 50%;
+  }
+
+  /* Animated background paths */
+  .bg-paths {
+    background: 
+      radial-gradient(circle at 20% 50%, hsl(var(--neon-cyan) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--neon-blue) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, hsl(var(--neon-purple) / 0.05) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(var(--background)) 0%, hsl(0 0% 1%) 100%);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    animation: pathsFloat 20s ease-in-out infinite;
+  }
+
+  /* Glass morphism effects */
+  .glass {
+    background: hsl(var(--card) / 0.8);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 
+      0 8px 32px hsl(var(--shadow-glow) / 0.1),
+      inset 0 1px 1px hsl(var(--foreground) / 0.05);
+  }
+
+  .glass-card {
+    background: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 
+      0 16px 40px hsl(var(--shadow-glow) / 0.1),
+      inset 0 1px 2px hsl(var(--foreground) / 0.1);
+  }
+
+  /* Neon glow effects */
+  .neon-glow {
+    box-shadow: 
+      0 0 20px hsl(var(--neon-cyan) / 0.5),
+      0 0 40px hsl(var(--neon-cyan) / 0.3),
+      0 0 60px hsl(var(--neon-cyan) / 0.1);
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--neon-cyan) / 0.5);
+    box-shadow: 
+      0 0 10px hsl(var(--neon-cyan) / 0.3),
+      inset 0 0 10px hsl(var(--neon-cyan) / 0.1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  /* Smooth transitions for theme switching */
+  * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--accent));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent-foreground));
+  }
+}
+
+@layer components {
+  /* Futuristic animations */
+  @keyframes pathsFloat {
+    0%, 100% { 
+      background-position: 0% 50%, 100% 0%, 50% 100%, 0% 0%; 
+    }
+    25% { 
+      background-position: 25% 25%, 75% 25%, 25% 75%, 25% 25%; 
+    }
+    50% { 
+      background-position: 50% 0%, 50% 50%, 0% 50%, 50% 50%; 
+    }
+    75% { 
+      background-position: 75% 75%, 25% 75%, 75% 25%, 75% 75%; 
+    }
+  }
+
+  @keyframes slideExpand {
+    from {
+      width: 60px;
+    }
+    to {
+      width: 320px;
+    }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 
+        0 0 20px hsl(var(--neon-cyan) / 0.3),
+        0 0 40px hsl(var(--neon-cyan) / 0.1);
+    }
+    50% {
+      box-shadow: 
+        0 0 30px hsl(var(--neon-cyan) / 0.5),
+        0 0 60px hsl(var(--neon-cyan) / 0.2);
+    }
+  }
+
+  @keyframes heartBeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+  }
+
+  /* Button variants */
+  .btn-futuristic {
+    @apply relative overflow-hidden rounded-lg px-6 py-3 font-medium transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 100%);
+    border: 1px solid hsl(var(--border));
+  }
+
+  .btn-futuristic:hover {
+    @apply scale-105;
+    box-shadow: 
+      0 8px 25px hsl(var(--shadow-glow)),
+      0 0 20px hsl(var(--neon-cyan) / 0.3);
+  }
+
+  .btn-interactive {
+    @apply relative overflow-hidden rounded-xl px-8 py-4 font-semibold transition-all duration-500;
+    background: linear-gradient(135deg, 
+      hsl(var(--neon-cyan) / 0.1) 0%, 
+      hsl(var(--neon-blue) / 0.1) 100%);
+    border: 1px solid hsl(var(--neon-cyan) / 0.3);
+    box-shadow: 
+      0 4px 15px hsl(var(--shadow-glow)),
+      inset 0 1px 1px hsl(0 0% 100% / 0.1);
+  }
+
+  .btn-interactive:hover {
+    @apply scale-110;
+    background: linear-gradient(135deg, 
+      hsl(var(--neon-cyan) / 0.2) 0%, 
+      hsl(var(--neon-blue) / 0.2) 100%);
+    border-color: hsl(var(--neon-cyan) / 0.6);
+    box-shadow: 
+      0 8px 30px hsl(var(--shadow-glow)),
+      0 0 30px hsl(var(--neon-cyan) / 0.4),
+      inset 0 1px 2px hsl(0 0% 100% / 0.2);
+  }
+
+  /* Search slide animation */
+  .search-slide {
+    @apply transition-all duration-500 ease-out;
+    width: 60px;
+  }
+
+  .search-slide.expanded {
+    width: 320px;
+    animation: slideExpand 0.5s ease-out;
+  }
+
+  .search-slide:focus-within {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  /* Heart animation for favorites */
+  .heart-animate {
+    @apply transition-all duration-300;
+  }
+
+  .heart-animate:hover {
+    @apply text-red-500;
+    animation: heartBeat 1.2s ease-in-out;
+  }
+
+  .heart-animate.favorited {
+    @apply text-red-500;
+    animation: heartBeat 0.6s ease-in-out;
+  }
+}
