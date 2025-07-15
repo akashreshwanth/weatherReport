@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseclient';
 
 export interface User {
   id: string;
-  name: string;
   email: string;
   avatar?: string;
 }
@@ -11,41 +11,50 @@ export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('weather-user');
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch (error) {
-        console.error('Error loading user:', error);
+    // Load the current session when app starts
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) {
+        setUser({
+          id: data.user.id,
+          email: data.user.email ?? '',
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.user.email}`
+        });
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    });
+
+    // Listen for auth state changes
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email ?? '',
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${session.user.email}`
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    // Unsubscribe on unmount
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
-  // Save user to localStorage whenever it changes
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('weather-user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('weather-user');
-    }
-  }, [user]);
-
-  const signIn = (email: string, password: string) => {
-    // Mock authentication - in real app this would call an API
-    const mockUser: User = {
-      id: '1',
-      name: email.split('@')[0],
+  const signIn = async (email: string) => {
+    const { error } = await supabase.auth.signInWithOtp({
       email,
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`
-    };
-    setUser(mockUser);
-    return Promise.resolve(mockUser);
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    });
+    return error;
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
   };
 
@@ -56,6 +65,6 @@ export const useAuth = () => {
     loading,
     isAuthenticated,
     signIn,
-    signOut
+    signOut,
   };
 };
