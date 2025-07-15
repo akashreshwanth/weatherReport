@@ -97,9 +97,10 @@ export const WeatherDashboard: React.FC = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 p-6 bg-zinc-600">
+      <header className="relative z-10 p-4 md:p-6 bg-zinc-600">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
+          {/* Desktop Layout */}
+          <div className="hidden lg:flex items-center justify-between">
             {/* Logo and title */}
             <div className="flex items-center gap-4">
               <div className="relative">
@@ -119,7 +120,7 @@ export const WeatherDashboard: React.FC = () => {
             </div>
 
             {/* Search */}
-            <div className="w-full sm:flex-1 max-w-md mx-8">
+            <div className="flex-1 max-w-md mx-8">
               <SlideSearch onSearch={handleSearch} placeholder="Search any city..." />
             </div>
 
@@ -144,6 +145,54 @@ export const WeatherDashboard: React.FC = () => {
                   <LogIn className="w-4 h-4" />
                   Sign In
                 </InteractiveHoverButton>}
+            </div>
+          </div>
+
+          {/* Mobile Layout */}
+          <div className="lg:hidden space-y-4">
+            {/* Top row - Logo and control buttons */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-xl flex items-center justify-center">
+                    <Cloud className="w-5 h-5 text-neon-cyan" />
+                  </div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-neon-cyan/20 to-neon-blue/20 rounded-xl blur opacity-50 animate-pulse" />
+                </div>
+                <div>
+                  <h1 className="text-lg font-display font-bold text-slate-200">
+                    WeatherScope
+                  </h1>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <InteractiveHoverButton onClick={handleGetLocation} className="px-2 py-1.5">
+                  <Navigation className="w-4 h-4" />
+                </InteractiveHoverButton>
+
+                <ThemeToggle />
+
+                {isAuthenticated ? (
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-card/20 border border-border/50">
+                      <img src={user?.avatar} alt={user?.name} className="w-5 h-5 rounded-full" />
+                    </div>
+                    <InteractiveHoverButton onClick={handleSignOut} className="px-2 py-1.5">
+                      <LogOut className="w-4 h-4" />
+                    </InteractiveHoverButton>
+                  </div>
+                ) : (
+                  <InteractiveHoverButton onClick={() => setAuthModalOpen(true)} className="px-2 py-1.5">
+                    <LogIn className="w-4 h-4" />
+                  </InteractiveHoverButton>
+                )}
+              </div>
+            </div>
+
+            {/* Search bar row */}
+            <div className="w-full">
+              <SlideSearch onSearch={handleSearch} placeholder="Search any city..." />
             </div>
           </div>
         </div>

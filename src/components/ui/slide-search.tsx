@@ -1,4 +1,3 @@
-// slide-search.tsx placeholder file
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -42,7 +41,7 @@ export const SlideSearch: React.FC<SlideSearchProps> = ({
             "search-slide glass-card flex items-center rounded-full transition-all duration-500 ease-out",
             "h-14 bg-card/80 backdrop-blur-md border border-border",
             "hover:border-neon-cyan/50 focus-within:border-neon-cyan focus-within:shadow-lg focus-within:shadow-neon-cyan/20",
-            isExpanded ? "w-full sm:max-w-sm" : "w-14"
+            isExpanded ? "w-full max-w-sm" : "w-14"
           )}
         >
           <button

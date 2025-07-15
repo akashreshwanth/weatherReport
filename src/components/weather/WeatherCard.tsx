@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heart, MapPin, Wind, Eye, Droplets, Gauge } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { WeatherData } from '@/hooks/useWeather';
 import { useFavorites } from '@/hooks/useFavorites';
 import { cn } from '@/lib/utils';
@@ -94,37 +95,156 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({ weather, className }) 
 
         {/* Weather details grid */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="glass rounded-lg p-3 flex items-center gap-3">
-            <Wind className="w-5 h-5 text-neon-cyan" />
-            <div>
-              <p className="text-xs text-muted-foreground">Wind</p>
-              <p className="text-sm font-medium">{weather.wind.speed} m/s</p>
-            </div>
-          </div>
+          {/* Wind */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="glass rounded-lg p-3 flex items-center gap-3 hover:bg-accent/20 transition-all duration-200 cursor-pointer w-full text-left">
+                <Wind className="w-5 h-5 text-neon-cyan" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Wind</p>
+                  <p className="text-sm font-medium">{weather.wind.speed} m/s</p>
+                </div>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Wind className="w-5 h-5 text-neon-cyan" />
+                  <h3 className="font-semibold">Wind Details</h3>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Speed:</span>
+                    <span className="font-medium">{weather.wind.speed} m/s</span>
+                  </div>
+                  {weather.wind.deg && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Direction:</span>
+                      <span className="font-medium">{weather.wind.deg}°</span>
+                    </div>
+                  )}
+                  {(weather.wind as any).gust && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Gust:</span>
+                      <span className="font-medium">{(weather.wind as any).gust} m/s</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           
-          <div className="glass rounded-lg p-3 flex items-center gap-3">
-            <Droplets className="w-5 h-5 text-neon-blue" />
-            <div>
-              <p className="text-xs text-muted-foreground">Humidity</p>
-              <p className="text-sm font-medium">{weather.main.humidity}%</p>
-            </div>
-          </div>
+          {/* Humidity */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="glass rounded-lg p-3 flex items-center gap-3 hover:bg-accent/20 transition-all duration-200 cursor-pointer w-full text-left">
+                <Droplets className="w-5 h-5 text-neon-blue" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Humidity</p>
+                  <p className="text-sm font-medium">{weather.main.humidity}%</p>
+                </div>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Droplets className="w-5 h-5 text-neon-blue" />
+                  <h3 className="font-semibold">Humidity Details</h3>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Current:</span>
+                    <span className="font-medium">{weather.main.humidity}%</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {weather.main.humidity > 80 ? "Very humid conditions" :
+                     weather.main.humidity > 60 ? "Moderately humid" :
+                     weather.main.humidity > 40 ? "Comfortable humidity" :
+                     "Low humidity levels"}
+                  </p>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           
-          <div className="glass rounded-lg p-3 flex items-center gap-3">
-            <Gauge className="w-5 h-5 text-neon-purple" />
-            <div>
-              <p className="text-xs text-muted-foreground">Pressure</p>
-              <p className="text-sm font-medium">{weather.main.pressure} hPa</p>
-            </div>
-          </div>
+          {/* Pressure */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="glass rounded-lg p-3 flex items-center gap-3 hover:bg-accent/20 transition-all duration-200 cursor-pointer w-full text-left">
+                <Gauge className="w-5 h-5 text-neon-purple" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Pressure</p>
+                  <p className="text-sm font-medium">{weather.main.pressure} hPa</p>
+                </div>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Gauge className="w-5 h-5 text-neon-purple" />
+                  <h3 className="font-semibold">Pressure Details</h3>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Current:</span>
+                    <span className="font-medium">{weather.main.pressure} hPa</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Sea Level:</span>
+                    <span className="font-medium">{(weather.main as any).sea_level || weather.main.pressure} hPa</span>
+                  </div>
+                  {(weather.main as any).grnd_level && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Ground Level:</span>
+                      <span className="font-medium">{(weather.main as any).grnd_level} hPa</span>
+                    </div>
+                  )}
+                  <p className="text-sm text-muted-foreground">
+                    {weather.main.pressure > 1020 ? "High pressure system" :
+                     weather.main.pressure > 1000 ? "Normal pressure" :
+                     "Low pressure system"}
+                  </p>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           
-          <div className="glass rounded-lg p-3 flex items-center gap-3">
-            <Eye className="w-5 h-5 text-neon-cyan" />
-            <div>
-              <p className="text-xs text-muted-foreground">Visibility</p>
-              <p className="text-sm font-medium">{(weather.visibility / 1000).toFixed(1)} km</p>
-            </div>
-          </div>
+          {/* Visibility */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="glass rounded-lg p-3 flex items-center gap-3 hover:bg-accent/20 transition-all duration-200 cursor-pointer w-full text-left">
+                <Eye className="w-5 h-5 text-neon-cyan" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Visibility</p>
+                  <p className="text-sm font-medium">{(weather.visibility / 1000).toFixed(1)} km</p>
+                </div>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-neon-cyan" />
+                  <h3 className="font-semibold">Visibility Details</h3>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Distance:</span>
+                    <span className="font-medium">{(weather.visibility / 1000).toFixed(1)} km</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Meters:</span>
+                    <span className="font-medium">{weather.visibility} m</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {weather.visibility >= 10000 ? "Excellent visibility" :
+                     weather.visibility >= 5000 ? "Good visibility" :
+                     weather.visibility >= 1000 ? "Moderate visibility" :
+                     "Poor visibility"}
+                  </p>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </GlassCard>
