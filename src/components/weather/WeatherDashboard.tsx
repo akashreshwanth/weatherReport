@@ -119,7 +119,7 @@ export const WeatherDashboard: React.FC = () => {
             </div>
 
             {/* Search */}
-            <div className="flex-1 max-w-md mx-8">
+            <div className="w-full sm:flex-1 max-w-md mx-8">
               <SlideSearch onSearch={handleSearch} placeholder="Search any city..." />
             </div>
 
