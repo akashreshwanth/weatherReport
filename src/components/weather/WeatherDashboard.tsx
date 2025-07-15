@@ -135,8 +135,8 @@ export const WeatherDashboard: React.FC = () => {
 
               {isAuthenticated ? <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card/20 border border-border/50">
-                    <img src={user?.avatar} alt={user?.name} className="w-6 h-6 rounded-full" />
-                    <span className="text-sm text-foreground">{user?.name}</span>
+                    <img src={user?.avatar} alt={user?.email?.split('@')[0]} className="w-6 h-6 rounded-full" />
+                    <span className="text-sm text-foreground">{user?.email?.split('@')[0]}</span>
                   </div>
                   <InteractiveHoverButton onClick={handleSignOut} className="px-4 py-2">
                     <LogOut className="w-4 h-4" />
@@ -176,7 +176,7 @@ export const WeatherDashboard: React.FC = () => {
                 {isAuthenticated ? (
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-card/20 border border-border/50">
-                      <img src={user?.avatar} alt={user?.name} className="w-5 h-5 rounded-full" />
+                      <img src={user?.avatar} alt={user?.email?.split('@')[0]} className="w-5 h-5 rounded-full" />
                     </div>
                     <InteractiveHoverButton onClick={handleSignOut} className="px-2 py-1.5">
                       <LogOut className="w-4 h-4" />
