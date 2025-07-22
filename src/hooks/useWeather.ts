@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
-const API_KEY = '7093c981438de537a191fc1bebe49a92';
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphZnprZ3N1eGF6bWR5cGtqc21mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MDAzOTAsImV4cCI6MjA2ODE3NjM5MH0.l9qv2Hw0y2nLcqRQyTvBkOuaU7MX8QcN8k_DOmAPniU';
+const BASE_URL = 'https://zafzkgsuxazmdypkjsmf.supabase.co';
 
 export interface WeatherData {
   id: number;

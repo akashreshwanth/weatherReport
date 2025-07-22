@@ -11,7 +11,7 @@ export default function SignIn() {
   const handleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOtp({ email });
     if (error) setError(error.message);
-    else alert("Magic link sent to your email.");
+    else alert(" link sent you email.");
   };
 
   return (
